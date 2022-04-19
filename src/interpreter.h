@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/stat.h>
 
 #ifdef DEBUG
 #include <malloc.h>
@@ -40,6 +39,12 @@ enum token_types {
 	R_BRAC   = ']'  // }
 };
 
+// Linked list:
+struct memory {
+	char value;
+	struct memory *fd, *bk;
+} typedef memory_t;
+
 // lexer structure:
 struct lexer {
 	// Lexer aspects:
@@ -49,25 +54,48 @@ struct lexer {
 	// Dynamic array:
 	char *token_stream;
 	size_t token_stream_length, token_stream_capacity;
+
+	memory_t *memory_head;
 } typedef bf_lexer_t;
 
+struct stack_t {
+	int sp;
+	char bracket_stack[1024];
+} typedef stack_t;
+
 // Interpreter:
-void bf_compile(void);
-void bf_execute(void);
+void bf_compile(bf_lexer_t *);
+void bf_execute(bf_lexer_t *);
 
-// Dynamic array handlers:
-void lexer_push_token(char);
+// Dynamic array function handler:
+void lexer_push_token(bf_lexer_t *, char);
 
+// Debugged functions:
 #ifdef DEBUG
-void display_token_stream(void);
+void display_token_stream(bf_lexer_t *);
 #endif
 
 // Lexer:
-void init_lexer(FILE *);
-void destroy_lexer(void);
+bf_lexer_t *init_lexer(FILE *);
+void destroy_lexer(bf_lexer_t *);
+
+// Linked list functions:
+memory_t *init_memory(void);
+memory_t *next_cell(memory_t *);
+memory_t *prev_cell(memory_t *);
+void free_list(memory_t *);
+
+// Stack functions:
+stack_t *init_stack(void);
+
+// Functionalities:
+void pop(stack_t *);
+void push(stack_t *, int);
+void free_stack(stack_t *);
 
 // Misc:
-int set_file_size(FILE *);
+int peek(stack_t *);
+int is_full(stack_t *);
+int is_empty(stack_t *);
 
 #endif
-
