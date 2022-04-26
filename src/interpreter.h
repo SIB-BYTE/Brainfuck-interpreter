@@ -29,8 +29,8 @@
     } while(0); \
 
 enum token_types {
-	INC		 = '+', // *(buffer_ptr++);
-	DEC		 = '-', // *(buffer_ptr--);
+	INC	 = '+', // *(buffer_ptr++);
+	DEC      = '-', // *(buffer_ptr--);
 	INC_DP   = '>', // buffer_ptr++;
 	DEC_DP   = '<', // buffer_ptr--;
 	PRINT	 = '.', // putchar(*buffer_ptr);
@@ -90,4 +90,3 @@ int peek_stack(stack_t *);
 int is_empty_stack(stack_t *);
 
 #endif
-
