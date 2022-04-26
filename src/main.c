@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "interpreter.h"
 
 int main(int argc, char **argv)
@@ -9,12 +8,6 @@ int main(int argc, char **argv)
 	LASSERT(fd, "Failure to open file\n");
 
 	bf_lexer_t *lexer = init_lexer(fd);
-
-	bf_compile(lexer);
-
-#ifdef DEBUG
-	display_token_stream(lexer);
-#endif
 
 	bf_execute(lexer);
 

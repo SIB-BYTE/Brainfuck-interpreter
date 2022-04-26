@@ -40,35 +40,27 @@ enum token_types {
 };
 
 // Linked list:
-struct memory {
+typedef struct memory {
 	char value;
 	struct memory *fd, *bk;
-} typedef memory_t;
+} memory_t;
 
 // lexer structure:
-struct lexer {
+typedef struct lexer {
 	// Lexer aspects:
 	char *file_buffer;
 	int file_buffer_size;
 
-	// Dynamic array:
-	char *token_stream;
-	size_t token_stream_length, token_stream_capacity;
-
 	memory_t *memory_head;
-} typedef bf_lexer_t;
+} bf_lexer_t;
 
-struct stack_t {
-	int sp;
-	char bracket_stack[1024];
-} typedef stack_t;
+// Stack structure:
+typedef struct stack_t {
+	int *stack, sp, length, capacity;
+} stack_t;
 
 // Interpreter:
-void bf_compile(bf_lexer_t *);
 void bf_execute(bf_lexer_t *);
-
-// Dynamic array function handler:
-void lexer_push_token(bf_lexer_t *, char);
 
 // Debugged functions:
 #ifdef DEBUG
@@ -89,13 +81,13 @@ void free_list(memory_t *);
 stack_t *init_stack(void);
 
 // Functionalities:
-void pop(stack_t *);
-void push(stack_t *, int);
+void stack_pop(stack_t *);
+void stack_push(stack_t *, int);
 void free_stack(stack_t *);
 
 // Misc:
-int peek(stack_t *);
-int is_full(stack_t *);
-int is_empty(stack_t *);
+int peek_stack(stack_t *);
+int is_empty_stack(stack_t *);
 
 #endif
+
