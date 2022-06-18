@@ -28,6 +28,7 @@
         } \
     } while(0); \
 
+// Each different type of possible token:
 enum token_types {
 	INC	 = '+', // *(buffer_ptr++);
 	DEC      = '-', // *(buffer_ptr--);
@@ -62,7 +63,7 @@ typedef struct stack_t {
 // Interpreter:
 void bf_execute(bf_lexer_t *);
 
-// Debugged functions:
+// Debugging functions:
 #ifdef DEBUG
 void display_token_stream(bf_lexer_t *);
 #endif
