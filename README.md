@@ -28,7 +28,8 @@ Yes this is it. The commands are defined below:
 Brainfuck can trivially be optimized via redundant instructions having to be processed linearly and instructions not even being used. You can preform basic peephole optimizations and even dead code elimination optimizations. We could trivially optimize the data-flow and the instruction generation by doing simple checks of redundancy. But to be able to optimize it, it'd be easier to do such in an intermediary language such as TAC (three code address IR) would work fine, upon translating it to this intermediate repesentation we could trivially optimize code like this:
 ```bf
 +++.
-``` instead of processing each instruction we could scan forward and return the result. So for example, let's say we're compiling brainfuck to x86-64, the unoptimized version would look like such:
+```
+instead of processing each instruction we could scan forward and return the result. So for example, let's say we're compiling brainfuck to x86-64, the unoptimized version would look like such:
 ```x86asm
 add r32, 1
 add r32, 1
