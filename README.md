@@ -24,6 +24,25 @@ Yes this is it. The commands are defined below:
 | [        | Opens up a loop and iterates until ``*ptr`` is 0.       |
 | ]        | Closes up the loop and iterates while ``*ptr`` isn't 0. |
 
+# Optimization
+Brainfuck can trivially be optimized via redundant instructions having to be processed linearly and instructions not even being used. You can preform basic peephole optimizations and even dead code elimination optimizations. We could trivially optimize the data-flow and the instruction generation by doing simple checks of redundancy. But to be able to optimize it, it'd be easier to do such in an intermediary language such as TAC (three code address IR) would work fine, upon translating it to this intermediate repesentation we could trivially optimize code like this:
+```bf
++++.
+``` instead of processing each instruction we could scan forward and return the result. So for example, let's say we're compiling brainfuck to x86-64, the unoptimized version would look like such:
+```x86asm
+add r32, 1
+add r32, 1
+add r32, 1
+mov edi, r32
+call print_char
+```
+we could optimize the code generation to:
+```x86asm
+add r32, 3
+mov edi, r32
+call print_char
+```
+
 # Resources:
 https://en.wikipedia.org/wiki/Brainfuck#Language_design
 
