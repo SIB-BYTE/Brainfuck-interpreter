@@ -30,16 +30,17 @@ Brainfuck can trivially be optimized via redundant instructions having to be pro
 +++.
 ```
 instead of processing each instruction we could scan forward and return the result. So for example, let's say we're compiling brainfuck to x86-64, the unoptimized version would look like such:
-```x86asm
-add r32, 1
-add r32, 1
-add r32, 1
-mov edi, r32
+```asm
+; ecx could be any given GPR, I just randomly chose it
+add ecx, 1
+add ecx, 1
+add ecx, 1
+mov edi, rcx
 call print_char
 ```
 we could optimize the code generation to:
-```x86asm
-add r32, 3
+```asm
+add ecx, 3
 mov edi, r32
 call print_char
 ```
